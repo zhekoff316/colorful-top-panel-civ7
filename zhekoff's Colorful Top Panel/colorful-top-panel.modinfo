@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Mod id="colorful-top-panel" version="1.0.0"
+	xmlns="ModInfo">
+	<Properties>
+		<Name>zhekoff's Colorful Top Panel</Name>
+        <Description>Adds vibrant, Civilization VI-inspired colored backgrounds to the top panel yields, improving the visual communication to the player.</Description>
+		<Authors>zhekoff</Authors>
+		<Package>Mod</Package>
+		<AffectsSavedGames>0</AffectsSavedGames>
+	</Properties>
+	<Dependencies>
+		<Mod id="base-standard" title="LOC_MODULE_BASE_STANDARD_NAME"/>
+	</Dependencies>
+	<ActionCriteria>
+		<Criteria id="always">
+			<AlwaysMet></AlwaysMet>
+		</Criteria>
+	</ActionCriteria>
+	<ActionGroups>
+		<ActionGroup id="colorful-top-panel" scope="game" criteria="always">
+			<Actions>
+				<UIScripts>
+					<Item>ui/diplo-ribbon/panel-yield-banner-ctp.js</Item>
+				</UIScripts>
+			</Actions>
+		</ActionGroup>
+	</ActionGroups>
+</Mod>
