@@ -10,9 +10,9 @@ style.textContent = `
 .panel-yield__top-bar-content .text-yield-happiness, 
 .panel-yield__top-bar-content .yield-panel-settlements {
     color: #FFFFFF !important;
-    border-radius: 8px;
-    padding-right: 10px;
-    margin: 3px;
+    border-radius: 0.4444444444rem;
+    padding-right: 0.5555555556rem;
+    margin: 0.1666666667rem;
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
     overflow: hidden;
@@ -70,7 +70,7 @@ style.textContent = `
 
 /* System bar components have to re-centered */
 .system-bar-container {
-	margin-top: 3px;
+	margin-top: 0.1666666667rem;
 }
 `;
 document.head.appendChild(style);
