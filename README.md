@@ -16,3 +16,5 @@ The mod was made for 1.0.1 Patch 3, however it is modularized and it should not 
 ## Links
 
 * [CivFanatics Download Link](https://forums.civfanatics.com/resources/zhekoffs-colorful-top-panel.31964/)
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/O5O41BNUB1)
