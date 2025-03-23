@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Mod id="colorful-top-panel" version="1.0.0"
+<Mod id="colorful-top-panel" version="1.1.0"
 	xmlns="ModInfo">
 	<Properties>
 		<Name>zhekoff's Colorful Top Panel</Name>
@@ -20,8 +20,31 @@
 		<ActionGroup id="colorful-top-panel" scope="game" criteria="always">
 			<Actions>
 				<UIScripts>
+					<!-- Main script -->
+					<Item>ui/diplo-ribbon/css-constants.js</Item>
 					<Item>ui/diplo-ribbon/panel-yield-banner-ctp.js</Item>
+					<!-- Settings -->
+					<Item>ui/settings/settings.js</Item>
+					<Item>ui/settings/settings-init.js</Item>
+					<Item>ui/settings/settings-shell-init.js</Item>
 				</UIScripts>
+				<UpdateText>
+					<!-- Base language -->
+					<Item>options/options_en_US.sql</Item>
+					
+					<!-- Additional languages -->
+					<Item locale="de_DE">options/options_de_DE.sql</Item>
+					<Item locale="es_ES">options/options_es_ES.sql</Item>
+					<Item locale="fr_FR">options/options_fr_FR.sql</Item>
+					<Item locale="it_IT">options/options_it_IT.sql</Item>
+					<Item locale="ja_JP">options/options_ja_JP.sql</Item>
+					<Item locale="ko_KR">options/options_ko_KR.sql</Item>
+					<Item locale="pl_PL">options/options_pl_PL.sql</Item>
+					<Item locale="pt_BR">options/options_pt_BR.sql</Item>
+					<Item locale="ru_RU">options/options_ru_RU.sql</Item>
+					<Item locale="zh_Hans_CN">options/options_zh_Hans_CN.sql</Item>
+					<Item locale="zh_Hant_HK">options/options_zh_Hant_HK.sql</Item>
+				</UpdateText>
 			</Actions>
 		</ActionGroup>
 	</ActionGroups>

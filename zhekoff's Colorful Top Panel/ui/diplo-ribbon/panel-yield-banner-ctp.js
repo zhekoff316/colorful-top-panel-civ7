@@ -1,82 +1,76 @@
+/**
+ * @file panel-yield-banner-ctp.js
+ * @description Colorful Top Panel mod with scaling options
+ */
+
 import { PanelYieldBanner } from '/base-standard/ui/diplo-ribbon/panel-yield-banner.js';
+import { colorfulTopPanelSettings } from 'fs://game/colorful-top-panel/ui/settings/settings.js';
+import { MAIN_STYLES } from './css-constants.js';
 
-const style = document.createElement('style');
-style.textContent = `
-/* General background settings */
-.panel-yield__top-bar-content .text-yield-gold,
-.panel-yield__top-bar-content .text-yield-diplomacy, 
-.panel-yield__top-bar-content .text-yield-science, 
-.panel-yield__top-bar-content .text-yield-culture, 
-.panel-yield__top-bar-content .text-yield-happiness, 
-.panel-yield__top-bar-content .yield-panel-settlements {
-    color: #FFFFFF !important;
-    border-radius: 0.4444444444rem;
-    padding-right: 0.5555555556rem;
-    margin: 0.1666666667rem;
-    -webkit-background-clip: padding-box;
-    background-clip: padding-box;
-    overflow: hidden;
-    transition: background-color 0.3s ease;
+// Scale factors for different UI elements
+const SCALE_FACTORS = {
+    DEFAULT: 1.0,
+    COMPACT: 0.9
+};
+
+// Create and apply CSS styles based on current settings
+function applyStyles() {
+    // Remove any existing styles first
+    const existingStyle = document.getElementById('colorful-top-panel-style');
+    if (existingStyle) {
+        existingStyle.remove();
+    }
+
+    const style = document.createElement('style');
+    style.id = 'colorful-top-panel-style';
+    
+    // Get current panel size setting
+    const isCompact = colorfulTopPanelSettings.PanelSize === 1;
+    const scaleFactor = isCompact ? SCALE_FACTORS.COMPACT : SCALE_FACTORS.DEFAULT;
+    
+    // Start with base style
+    let styleContent = MAIN_STYLES;
+    
+    // Add scaling transform if compact mode is enabled
+    if (isCompact) {
+        styleContent += `
+        /* Apply scale to the entire container - much simpler approach */
+        .panel-yield__top-bar-content {
+            transform: scale(${scaleFactor});
+            transform-origin: left center;
+        }
+        `;
+    }
+    
+    // Apply the styles
+    style.textContent = styleContent;
+    document.head.appendChild(style);
 }
 
-/* Yield backgrounds */
-.panel-yield__top-bar-content .text-yield-gold {
-    background-color: rgba(255, 235, 75, 0.3);
-}
-
-.panel-yield__top-bar-content .text-yield-gold:hover {
-    background-color: rgba(255, 235, 75, 0.5);
-}
-
-.panel-yield__top-bar-content .text-yield-diplomacy {
-    background-color: rgba(88, 192, 231, 0.3);
-}
-
-.panel-yield__top-bar-content .text-yield-diplomacy:hover {
-    background-color: rgba(88, 192, 231, 0.5);
-}
-
-.panel-yield__top-bar-content .text-yield-science {
-    background-color: rgba(50, 151, 255, 0.3);
-}
-
-.panel-yield__top-bar-content .text-yield-science:hover {
-    background-color: rgba(50, 151, 255, 0.5);
-}
-
-.panel-yield__top-bar-content .text-yield-culture {
-    background-color: rgba(197, 75, 255, 0.3);
-}
-
-.panel-yield__top-bar-content .text-yield-culture:hover {
-    background-color: rgba(197, 75, 255, 0.5);
-}
-
-.panel-yield__top-bar-content .text-yield-happiness {
-    background-color: rgba(253, 175, 50, 0.3);
-}
-
-.panel-yield__top-bar-content .text-yield-happiness:hover {
-    background-color: rgba(253, 175, 50, 0.5);
-}
-
-.panel-yield__top-bar-content .yield-panel-settlements {
-    background-color: rgba(228, 228, 228, 0.3);
-}
-
-.panel-yield__top-bar-content .yield-panel-settlements:hover {
-    background-color: rgba(228, 228, 228, 0.5);
-}
-
-/* System bar components have to re-centered */
-.system-bar-container {
-	margin-top: 0.1666666667rem;
-}
-`;
-document.head.appendChild(style);
-
+// Patch the original render method to add our custom class
 const originalRender = PanelYieldBanner.prototype.render;
 PanelYieldBanner.prototype.render = function() {
-  originalRender.apply(this, arguments);
-  this.settlementCapElement.classList.add('yield-panel-settlements');
+    originalRender.apply(this, arguments);
+    this.settlementCapElement.classList.add('yield-panel-settlements');
 };
+
+// Initialize the mod
+engine.whenReady.then(() => {
+    try {
+        // Import settings initialization module
+        import('fs://game/colorful-top-panel/ui/settings/settings-init.js');
+        
+        // Apply initial styles
+        applyStyles();
+        
+        // Listen for settings changes
+        window.addEventListener('colorful-top-panel-settings-changed', applyStyles);
+    } catch (error) {
+        console.error("Colorful Top Panel initialization error:", error);
+    }
+});
+
+// Apply styles immediately if engine is already ready
+if (engine.isReady) {
+    applyStyles();
+}
